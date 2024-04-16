@@ -1,10 +1,9 @@
-import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from '../screens/LoginScreen';
-import ListTaskScreen from '../screens/ListTaskScreen';
-import AddTaskScreen from '../screens/AddTaskScreen';
-import Header from '../components/Header';
+import * as React from 'react';
 import { COLORS } from '../constants';
+import AddTaskScreen from '../screens/AddTaskScreen';
+import ListTaskScreen from '../screens/ListTaskScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 
