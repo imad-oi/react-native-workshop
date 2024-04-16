@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Button from '../components/Button';
-import { COLORS, categories, icons } from '../constants';
+import { COLORS, categories, icons, images } from '../constants';
 
 const defaultTask = [{ id: 0, title: 'Default task', checked: false, category: 3 }];
 const defaultCompletedTask = [{ id: 1, title: 'Default Completed task', checked: true, category: 3 }];
@@ -72,7 +72,7 @@ export default function ListTaskScreen({ navigation }) {
             </Text>
             <View>
               <Image
-                source={icons.congratulation}
+                source={images.congratulation}
                 style={{ width: 200, height: 200, alignSelf: 'center' }}
               />
             </View>
