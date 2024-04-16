@@ -19,7 +19,7 @@ export default function ListTaskScreen({ navigation }) {
 
   // définir les etats de la liste des taches et des taches completes
   const [todoList, setTodoList] = React.useState(defaultTask);
-  const [completedTodos, setCompletedTodos] = React.useState(defaultCompletedTask);
+  const [completedTodos, setCompletedTodos] = React.useState([]);
 
   // fonction pour gerer le changement de l'etat de la tache
   const handleCheck = (task) => () => {
