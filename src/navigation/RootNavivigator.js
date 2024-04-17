@@ -4,13 +4,14 @@ import { COLORS } from '../constants';
 import AddTaskScreen from '../screens/AddTaskScreen';
 import ListTaskScreen from '../screens/ListTaskScreen';
 import LoginScreen from '../screens/LoginScreen';
+import Header from '../components/Header';
 
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Login"  // Pour définir l'écran de démarrage
       screenOptions={{
         headerStyle: { backgroundColor: COLORS.primary },
         headerTintColor: COLORS.white,
@@ -21,7 +22,7 @@ const RootNavigator = () => {
       <Stack.Screen
         options={
           {
-            // headerTitle: () => <Header name="Login" />,
+            // headerTitle: () => <Header name="Login Screen" />,
             // headerStyle: {
             //   backgroundColor: '#4c00b0',
             //   height: 120,

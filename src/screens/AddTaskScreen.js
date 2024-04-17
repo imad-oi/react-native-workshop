@@ -5,13 +5,15 @@ import {
   StyleSheet,
   Image,
   TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 import { COLORS, categories } from '../constants';
 import Button from '../components/Button';
 import React from 'react';
 
 export default function AddTaskScreen({ navigation, route }) {
-  
+  // navigation et route sont ajouté par défaut par react-navigation
+
   // initialiser les variables d'état
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [task, setTask] = React.useState({
@@ -39,7 +41,11 @@ export default function AddTaskScreen({ navigation, route }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      keyboardDismissMode="on-drag" // Pour cacher le clavier lorsqu'on scroll
+      contentContainerStyle={styles.container} // Pour définir le style du container
+    >
+      {/* Titre du tache à faire */}
       <View style={styles.formItem}>
         <Text>Task tile</Text>
         <TextInput
@@ -48,16 +54,11 @@ export default function AddTaskScreen({ navigation, route }) {
           style={styles.input}
         />
       </View>
+
+      {/* Catégorie de la tâche à faire */}
       <View style={styles.formItem}>
         <Text>Category</Text>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: 15,
-            justifyContent: 'center',
-          }}
-        >
+        <View style={styles.flexCategories}>
           {categories.map((category) => (
             <TouchableHighlight
               onPress={() => {
@@ -65,22 +66,23 @@ export default function AddTaskScreen({ navigation, route }) {
                 setTask({ ...task, category: category.id });
               }}
               key={category.id}
-              style={{
-                padding: 7,
-                borderRadius: 20,
-                backgroundColor: COLORS.secondary,
-                borderWidth: 3,
-                borderColor:
-                  selectedCategory === category.id
-                    ? COLORS.primary
-                    : COLORS.white,
-              }}
+              style={[
+                styles.categoryWrapper,
+                {
+                  borderColor:
+                    selectedCategory === category.id
+                      ? COLORS.primary
+                      : COLORS.white,
+                },
+              ]}
             >
               <Image source={category.image} />
             </TouchableHighlight>
           ))}
         </View>
       </View>
+
+      {/* Description de la tâche à faire */}
       <View style={styles.formItem}>
         <Text>Task description</Text>
         <TextInput
@@ -91,11 +93,14 @@ export default function AddTaskScreen({ navigation, route }) {
           numberOfLines={9}
         />
       </View>
+
+      {/* Bouton pour sauvegarder la tâche */}
       <Button label="Save" onPress={handleSaveTask} />
-    </View>
+    </ScrollView>
   );
 }
 
+// les styles de la page AddTaskScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -123,5 +128,25 @@ const styles = StyleSheet.create({
   formItem: {
     display: 'flex',
     gap: 10,
+  },
+  flexCategories: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 15,
+    justifyContent: 'center',
+  },
+  categoryWrapper: {
+    padding: 7,
+    borderRadius: 20,
+    backgroundColor: COLORS.secondary,
+    borderWidth: 3,
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });

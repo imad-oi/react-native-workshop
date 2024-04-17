@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import {
+  ImageBackground,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from 'react-native';
-import { COLORS } from '../constants';
+import { COLORS, images } from '../constants';
 import { validateEmail, validatePassword } from '../utils';
 
 export default function LoginScreen({ navigation }) {
@@ -18,7 +19,6 @@ export default function LoginScreen({ navigation }) {
 
   // la function handleChange() va mettre à jour les valeurs de l'email et du mot de passe
   const handleChange = (name, value) => {
-    console.log(name, value);
     setForm({ ...form, [name]: value });
   };
 
@@ -39,30 +39,40 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Connect to your account</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      
+      {/* Definir l'image d'arrière plan */}
+      <ImageBackground
+        source={images.backgroundLogin}
+        style={styles.bgImage}
+      >
+        <Text style={styles.text}>Connect to your account</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        textContentType="emailAddress"
-        autoComplete='email'
-        onChangeText={(value) => handleChange('email', value)}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          keyboardType="email-address"
+          textContentType="emailAddress"
+          autoComplete="email"
+          onChangeText={(value) => handleChange('email', value)}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        textContentType="password"
-        onChangeText={(value) => handleChange('password', value)}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry={true}
+          textContentType="password"
+          onChangeText={(value) => handleChange('password', value)}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.btnText}>Sign In</Text>
-      </TouchableOpacity>
-    </View>
+        {/* TouchableOpacity est un composant qui permet de rendre n'importe quel élément cliquable,
+       avec un effet d'opacité lorsqu'on clique dessus
+      */}
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.btnText}>Sign In</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    </ScrollView>
   );
 }
 
@@ -95,4 +105,11 @@ const styles = StyleSheet.create({
   btnText: {
     color: COLORS.white,
   },
+  bgImage :{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  }
 });

@@ -1,22 +1,15 @@
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  SectionList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import Button from '../components/Button';
-import { COLORS, categories, icons, images } from '../constants';
+import { COLORS, categories, images } from '../constants';
+import { StatusBar } from 'expo-status-bar';
 
-const defaultTask = [{ id: 0, title: 'Default task', checked: false, category: 3 }];
-const defaultCompletedTask = [{ id: 1, title: 'Default Completed task', checked: true, category: 3 }];
+const defaultTask = [
+  { id: 0, title: 'Default task', checked: false, category: 3 },
+];
 
 export default function ListTaskScreen({ navigation }) {
-
   // définir les etats de la liste des taches et des taches completes
   const [todoList, setTodoList] = React.useState(defaultTask);
   const [completedTodos, setCompletedTodos] = React.useState([]);
@@ -57,10 +50,13 @@ export default function ListTaskScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* Definition de StatusBar */}
+      <StatusBar backgroundColor={COLORS.primary} />
+
+      {/* List des taches à faire */}
       <ScrollView style={styles.scrollView}>
         {todoList.length > 0 ? (
           todoList.map((item) => {
-            console.log('item', item);
             return (
               <TodoItem key={item.id} item={item} handleCheck={handleCheck} />
             );
@@ -82,15 +78,29 @@ export default function ListTaskScreen({ navigation }) {
         )}
       </ScrollView>
 
+      {/*  Liste des taches completées */}
       <Text style={styles.screenTitle}>Completed Tasks</Text>
-
       <ScrollView style={styles.scrollView}>
-        {completedTodos.map((item) => {
-          return (
-            <TodoItem key={item.id} item={item} handleCheck={handleCheck} />
-          );
-        })}
+        {completedTodos.length > 0 ? (
+          completedTodos.map((item) => {
+            return (
+              <TodoItem key={item.id} item={item} handleCheck={handleCheck} />
+            );
+          })
+        ) : (
+          <Text
+            style={{
+              ...styles.descText,
+              textAlign: 'center',
+              marginTop: 20,
+            }}
+          >
+            No completed tasks found
+          </Text>
+        )}
       </ScrollView>
+
+      {/* Button pour ajouter une nouvelle tache */}
       <Button
         label="Add New Task"
         onPress={() =>
@@ -103,7 +113,6 @@ export default function ListTaskScreen({ navigation }) {
     </View>
   );
 }
-
 
 // les styles de la page
 const styles = StyleSheet.create({
@@ -123,7 +132,7 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     textAlign: 'left',
     marginVertical: 10,
   },
@@ -146,24 +155,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-// ajouter ce code dans le ficher readme.md
-// une example pour FlatList
-{/* <>
-  <FlatList
-    data={defaultTask}
-    renderItem={({ item }) => renderTodoItem({ item })}
-    keyExtractor={(item) => item.id}
-  />
-  // un example pour SectionList
-  <SectionList
-    sections={[
-      { title: 'Todo', data: ['Task 1', 'Task 2', 'Task 3'] },
-      { title: 'Done', data: ['Task 6', 'Task 7', 'Task 8'] },
-    ]}
-    renderItem={({ item }) => renderTodoItem({ item })}
-    renderSectionHeader={({ section }) => <Text>{section.title}</Text>}
-    keyExtractor={(item, index) => index}
-  />
-  ;
-</>; */}
